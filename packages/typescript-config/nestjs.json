@@ -16,10 +16,6 @@
         "sourceMap": true,
         "strictNullChecks": false,
         "strictBindCallApply": false,
-        "paths": {
-            "@workspacedb/*": [
-                "packages/db/*"
-            ]
-        }
+     
     }
 }
