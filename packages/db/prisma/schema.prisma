@@ -30,6 +30,12 @@ model User {
   password String
   status   USER_STATUS @default(ACTIVE)
   logs     Log[]
+
+  tenantId String @db.Uuid
+  roleId   String @db.Uuid
+
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+  role   Role   @relation(fields: [roleId], references: [id])
 }
 
 enum LOGS_STATUS {
@@ -60,4 +66,47 @@ model Log {
   status  LOGS_STATUS
   action  LOGS_ACTION
   message String
+}
+
+model Tenant {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name     String
+  isActive Boolean @default(false)
+  logoUrl  String?
+  meta     Json    @default("{}")
+  tenantId String  @unique
+
+  users User[]
+}
+
+enum ROLE_TYPE {
+  TENANT_MANAGER
+  TENANT_ADMIN
+  TENANT_CLIENT
+}
+
+model Role {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  type ROLE_TYPE
+  name String
+
+  permission permission[]
+  User       User[]
+}
+
+model permission {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  identytiiy String @unique
+  name       String
+
+  role Role[]
 }
