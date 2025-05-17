@@ -25,17 +25,18 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name     String
-  email    String      @unique
-  password String
-  status   USER_STATUS @default(ACTIVE)
-  logs     Log[]
+  name   String
+  email  String      @unique
+  status USER_STATUS @default(ACTIVE)
 
   tenantId String @db.Uuid
   roleId   String @db.Uuid
 
   tenant Tenant @relation(fields: [tenantId], references: [id])
   role   Role   @relation(fields: [roleId], references: [id])
+
+  logs   Log[]
+  client Client[]
 }
 
 enum LOGS_STATUS {
@@ -96,11 +97,11 @@ model Role {
   type ROLE_TYPE
   name String
 
-  permission permission[]
+  permission Permission[]
   User       User[]
 }
 
-model permission {
+model Permission {
   id        String   @id @default(uuid()) @db.Uuid
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -109,4 +110,30 @@ model permission {
   name       String
 
   role Role[]
+}
+
+model Client {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String
+
+  userId String @db.Uuid
+
+  user User @relation(fields: [userId], references: [id])
+
+  clientUser clientUser[]
+}
+
+model clientUser {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name  String
+  email String @unique
+
+  Client   Client @relation(fields: [clientId], references: [id])
+  clientId String @db.Uuid
 }
