@@ -1,11 +1,13 @@
 import { Module } from "@nestjs/common";
-import { UserModule } from "./modules/user/user.module";
-import { LogModule } from "./modules/log/log.module";
 import { V0Controller } from "./v0.controller";
+import { AdminModule } from "./modules/users/user.module"
+import { TenantModule } from "./modules/tenant/tenant.module";
+import { ClientModule } from "./modules/client/client.module";
 
 const V0_SUBMODULES = [
-  UserModule,
-  LogModule,
+  AdminModule,
+  TenantModule,
+  ClientModule
 ];
 
 @Module({
