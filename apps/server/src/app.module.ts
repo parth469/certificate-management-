@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod, VersioningType } from '@nestjs/common';
 import { V0modules } from './v0/v0.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { AuthMiddleware } from './v0/middleware/auth.middleware';
 
 const rateLimiter = [
   {
@@ -33,4 +34,13 @@ const rateLimiter = [
     }
   ]
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware)
+      .exclude(
+        { path: '*splat/login', method: RequestMethod.POST },
+        { path: '*splat/health', method: RequestMethod.ALL }
+      )
+      .forRoutes({ path: '*splat', method: RequestMethod.ALL });
+  }
+}
