@@ -8,8 +8,9 @@ async function bootstrap() {
       origin: "*",
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     }
-
   });
+
+  app.setGlobalPrefix('api')
 
   app.enableVersioning({
     defaultVersion: '0',
