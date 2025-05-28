@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { V0Controller } from "./v0.controller";
-import { AdminModule } from "./modules/users/user.module"
-import { TenantModule } from "./modules/tenant/tenant.module";
-import { ClientModule } from "./modules/client/client.module";
+import { AdminModule } from "./users/admin.module"
+import { TenantModule } from "./tenant/tenant.module";
+import { ClientModule } from "./client/client.module";
 
 const V0_SUBMODULES = [
   AdminModule,

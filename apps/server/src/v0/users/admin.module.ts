@@ -13,8 +13,8 @@ const ADMIN_MODULES = [UserModule, RoleModule];
                 path: "admin",
                 module: AdminModule,
                 children: [
-                    { path: "/users", module: UserModule },
-                    { path: "/roles", module: RoleModule },
+                    { path: "/", module: UserModule },
+                    { path: "/", module: RoleModule },
                 ],
             },
         ]),

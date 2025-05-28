@@ -2,7 +2,7 @@ import { MiddlewareConsumer, Module, NestModule, RequestMethod, VersioningType }
 import { V0modules } from './v0/v0.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthMiddleware } from './v0/middleware/auth/auth-user.middleware';
+import { AuthMiddleware } from './v0/common/utils/middleware/auth/auth-tenant.middleware';
 
 const rateLimiter = [
   {
